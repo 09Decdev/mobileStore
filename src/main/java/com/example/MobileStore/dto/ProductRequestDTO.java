@@ -30,8 +30,15 @@ public class ProductRequestDTO {
     @NotBlank(message = "Condition ís required")
     private Integer conditionID;
 
-    @NotBlank(message = "Image ís required")
-    private List<String>imageUrls;
+    private List<Long> imageIds;
+
+    public List<Long> getImageIds() {
+        return imageIds;
+    }
+
+    public void setImageIds(List<Long> imageIds) {
+        this.imageIds = imageIds;
+    }
 
     public String getName() {
         return name;
@@ -89,11 +96,4 @@ public class ProductRequestDTO {
         this.conditionID = conditionID;
     }
 
-    public List<String> getImageUrls() {
-        return imageUrls;
-    }
-
-    public void setImageUrls(List<String> imageUrls) {
-        this.imageUrls = imageUrls;
-    }
 }

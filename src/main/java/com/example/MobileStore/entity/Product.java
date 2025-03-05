@@ -2,6 +2,7 @@ package com.example.MobileStore.entity;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 @Entity
 public class Product {
@@ -35,7 +36,10 @@ public class Product {
     private Conditions condition;
 
     @OneToMany(mappedBy ="product",cascade = CascadeType.ALL)
-    private List<ProductImage>productImages;
+    private List<ProductImage>images=new ArrayList<>();
+
+    public Product() {
+    }
 
     public Long getId() {
         return id;
@@ -101,11 +105,11 @@ public class Product {
         this.condition = condition;
     }
 
-    public List<ProductImage> getProductImages() {
-        return productImages;
+    public List<ProductImage> getImages() {
+        return images;
     }
 
-    public void setProductImages(List<ProductImage> productImages) {
-        this.productImages = productImages;
+    public void setImages(List<ProductImage> images) {
+        this.images = images;
     }
 }

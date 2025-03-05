@@ -2,7 +2,6 @@ package com.example.MobileStore.dto;
 
 import jakarta.validation.constraints.NotBlank;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //trả dữ liệu về
@@ -11,7 +10,7 @@ public class ProductResponseDTO {
     private double price;
     private int stock;
     private String description;
-    private List<String>imageUrl;
+    private List<Long>imageIds;
 
     public String getName() {
         return name;
@@ -45,11 +44,11 @@ public class ProductResponseDTO {
         this.description = description;
     }
 
-    public List<String> getImageUrl() {
-        return imageUrl;
+    public List<Long> getImageIds() {
+        return imageIds;
     }
 
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageIds(List<Long> imageIds) {
+        this.imageIds = imageIds;
     }
 }

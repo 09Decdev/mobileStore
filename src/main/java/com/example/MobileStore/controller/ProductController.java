@@ -30,7 +30,6 @@ public class ProductController {
     @PostMapping(value = "/create", consumes ="multipart/form-data" )//MediaType.MULTIPART_FORM_DATA_VALUE
     public ResponseEntity<ProductResponseDTO>createProductWithImage(
             @ModelAttribute ProductRequestDTO productRequestDTO,
-//            @RequestPart("product")@Valid ProductRequestDTO productRequestDTO,
             @RequestPart("images") List<MultipartFile> images){
 
         try {

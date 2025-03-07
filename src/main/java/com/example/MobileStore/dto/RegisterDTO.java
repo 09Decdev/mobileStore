@@ -19,6 +19,7 @@ public class RegisterDTO {
             message = "Email không hợp lệ"
     )
     private String email;
+
     private Integer role;
 
     public String getUsername() {

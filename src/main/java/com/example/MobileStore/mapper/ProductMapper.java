@@ -3,18 +3,9 @@ package com.example.MobileStore.mapper;
 import com.example.MobileStore.dto.ProductRequestDTO;
 import com.example.MobileStore.dto.ProductResponseDTO;
 import com.example.MobileStore.entity.*;
-import com.example.MobileStore.service.ImageService;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.Named;
-import org.mapstruct.factory.Mappers;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 @Mapper(componentModel = "spring",uses = {ProductMapperHelper.class})
 public interface ProductMapper {
 

@@ -22,6 +22,9 @@ public class CartDTO {
                 .collect(Collectors.toList());
     }
 
+    public CartDTO() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -35,45 +35,14 @@ public class ProductService {
     private ImageRepository imageRepository;
 
     @Autowired
-    private ImageService imageService;
-
-    @Autowired
     private ProductMapper productMapper;
 
-    public ProductService(ProductRepository repository, ImageRepository imageRepository, ImageService imageService, ProductMapper productMapper) {
+    public ProductService(ProductRepository repository, ImageRepository imageRepository, ProductMapper productMapper) {
         this.repository = repository;
         this.imageRepository = imageRepository;
-        this.imageService = imageService;
         this.productMapper = productMapper;
     }
 
-    //@Transactional // Đảm bảo transaction hoạt động
-//public ProductResponseDTO createProduct(ProductRequestDTO requestDTO, List<MultipartFile> imageFiles) {
-//    // Kiểm tra request đầu vào
-//    if (requestDTO == null) {
-//        throw new IllegalArgumentException("ProductRequestDTO is null");
-//    }
-//
-//    // Chuyển DTO sang entity
-//    Product product = productMapper.toEntity(requestDTO);
-//    if (product == null) {
-//        throw new RuntimeException("productMapper.toEntity() returned null");
-//    }
-//
-//    // Lưu product vào database
-//    product = repository.save(product);
-//    if (product.getId() == null) {
-//        throw new RuntimeException("Product save failed, ID is null");
-//    }
-//
-//     Lưu hình ảnh nếu có
-//    if (imageFiles != null && !imageFiles.isEmpty()) {
-//        System.out.println("Saving images...");
-//        imageService.saveImages(product, imageFiles);
-//    }
-//
-//    return productMapper.toDTO(product);
-//}
 public List<ProductResponseDTO> getAllProduct(){
     return repository.findAll()
             .stream()
@@ -108,9 +77,9 @@ public List<ProductImage> uploadProductImage(List<MultipartFile>files) throws IO
     for (MultipartFile file:files){
         if (file.isEmpty())continue;
 
-        String filename= UUID.randomUUID()+"_"+file.getOriginalFilename();
-        Path filePath= Paths.get(uploadDir+filename);
-        Files.copy(file.getInputStream(),filePath, StandardCopyOption.REPLACE_EXISTING);
+        String filename= UUID.randomUUID()+ "_" + file.getOriginalFilename();
+        Path filePath= Paths.get(uploadDir + filename);
+        Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         ProductImage image=new ProductImage();
         image.setImageUrl(uploadDir+filename);

@@ -11,6 +11,7 @@ import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.xml.crypto.Data;
@@ -20,7 +21,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
-
+@Component
 public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -39,7 +40,7 @@ public class JwtTokenProvider {
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(expirationTime)
-                .signWith(getSignKey(), SignatureAlgorithm.ES256)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -66,7 +67,7 @@ public class JwtTokenProvider {
             return Jwts.parserBuilder()
                     .setSigningKey(getSignKey())
                     .build()
-                    .parseClaimsJwt(token)
+                    .parseClaimsJws(token)
                     .getBody();
         }catch (ExpiredJwtException e) {
             throw new TokenExpiredException("JWT token is expired");

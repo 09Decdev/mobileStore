@@ -1,6 +1,8 @@
 package com.example.MobileStore.dto;
 
 import com.example.MobileStore.entity.CartItems;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.math.BigDecimal;
 
@@ -15,6 +17,9 @@ public class CartItemDTO {
         this.productName = cartItem.getProduct().getName();
         this.quantity = cartItem.getQuantity();
         this.total = cartItem.getTotal();
+    }
+
+    public CartItemDTO() {
     }
 
     public Long getId() {

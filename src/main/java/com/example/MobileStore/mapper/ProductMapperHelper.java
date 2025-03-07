@@ -41,11 +41,17 @@ public class ProductMapperHelper {
         return (conditionID == null) ? null : conditionService.findById(conditionID);
     }
 
+//    @Named("mapToImageIds")
+//    public List<Long> mapToImageIds(List<ProductImage> images) {
+//        if (images==null)return null;
+//        return images.stream().map(ProductImage::getId).toList();
+//    }
     @Named("mapToImageIds")
-    public List<Long> mapToImageIds(List<ProductImage> images) {
+    public List<String> mapToImageIds(List<ProductImage> images) {
         if (images==null)return null;
-        return images.stream().map(ProductImage::getId).toList();
+        return images.stream().map(ProductImage::getImageUrl).toList();
     }
+
 
     @Named("mapToProductImages")
     public List<ProductImage> mapToProductImage(List<Long>imageIds){

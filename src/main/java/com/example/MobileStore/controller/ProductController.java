@@ -3,12 +3,8 @@ package com.example.MobileStore.controller;
 import com.example.MobileStore.dto.ProductRequestDTO;
 import com.example.MobileStore.dto.ProductResponseDTO;
 import com.example.MobileStore.service.ProductService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,4 +46,28 @@ public class ProductController {
     public List<ProductResponseDTO>searchProducts(@RequestParam String name){
         return productService.getProductByName(name);
     }
+    @GetMapping("/{id}")
+    public ProductResponseDTO getProductByID(@PathVariable Long id){
+        return productService.getProductById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id){
+        productService.deleteProduct(id);
+        return ResponseEntity.ok("Product with id: "+id+"has been deleted successfully");
+    }
+
+    @PutMapping(value = "/{id}",consumes = "multipart/form-data")
+    public ResponseEntity<ProductResponseDTO> update(@PathVariable("id")Long id,
+                                                     @ModelAttribute ProductRequestDTO productRequestDTO,
+                                                     @RequestPart("images") List<MultipartFile> images){
+        try {
+            ProductResponseDTO productResponseDTO= productService.updateProduct(id,productRequestDTO,images);
+            return ResponseEntity.status(HttpStatus.CREATED).body(productResponseDTO);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
 }

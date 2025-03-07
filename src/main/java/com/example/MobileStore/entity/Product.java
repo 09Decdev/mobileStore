@@ -35,7 +35,7 @@ public class Product {
     @JoinColumn(name = "condition_id")
     private Conditions condition;
 
-    @OneToMany(mappedBy ="product",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy ="product",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<ProductImage>images=new ArrayList<>();
 
     public Product() {

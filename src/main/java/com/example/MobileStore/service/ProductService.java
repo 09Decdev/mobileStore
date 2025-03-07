@@ -87,6 +87,16 @@ public List<ProductImage> uploadProductImage(List<MultipartFile>files) throws IO
     }
     return images;
 }
+      public  void deleteProduct(Long id){
+        Product product=repository.findById(id).orElseThrow(()->new RuntimeException("Not Found Product With Id: "+id));
+        repository.delete(product);
+    }
+
+    public  ProductResponseDTO getProductById(Long id){
+        return repository.findById(id).map(productMapper::toDTO)
+                .orElseThrow(()-> new RuntimeException("Not Found Product With ID: "+id));
+    }
+
     public UrlResource loadProductImage(Long productId, Long imageId) throws IOException {
         Product product = repository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
@@ -110,5 +120,25 @@ public List<ProductImage> uploadProductImage(List<MultipartFile>files) throws IO
         Path imagePath=Paths.get(resource.getFile().getAbsolutePath());
         String contentType=Files.probeContentType(imagePath);
         return contentType != null ?contentType:"application/octet-stream";
+    }
+
+    public ProductResponseDTO updateProduct(Long productId, ProductRequestDTO productRequestDTO, List<MultipartFile>files)throws  IOException{
+        Product product=repository.findById(productId).orElseThrow(()->new RuntimeException("Not found product"));
+
+        product.setName(productRequestDTO.getName());
+        product.setPrice(productRequestDTO.getPrice());
+        product.setStock(productRequestDTO.getStock());
+        product.setDescription(productRequestDTO.getDescription());
+
+        if (files!=null&&!files.isEmpty()){
+            product.getImages().clear();
+            List<ProductImage> newImage=uploadProductImage(files);
+            newImage.forEach(image->{image.setProduct(product);
+                product.getImages().add(image);
+            });
+//            product.setImages(newImage);
+        }
+        Product productUpdate= repository.save(product);
+        return productMapper.toDTO(productUpdate);
     }
 }
